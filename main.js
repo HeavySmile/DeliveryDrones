@@ -1,103 +1,171 @@
-const fs = require('fs');
-const Product = require('./Models/Product.js');
-const Warehouse = require('./Models/Warehouse.js');
-const Coordinates = require('./Models/Coordinates.js');
-const Customer = require('./Models/Customer.js');
-const Order = require('./Models/Order.js');
+// Example JSON data (assuming this is loaded or available in your environment)
+const data = {
+    "map-top-right-coordinate": { "x": 280, "y": 280 },
+    "products": ["tomatoes", "cucumber", "cheese", "milk", "ham", "eggs", "bananas", "carrots", "bread", "onion"],
+    "warehouses": [
+        { "x": 100, "y": 100, "name": "Left warehouse" },
+        { "x": 200, "y": 200, "name": "Right warehouse" }
+    ],
+    "customers": [
+        { "id": 1, "name": "John Stocks", "coordinates": { "x": 10, "y": 10 } },
+        { "id": 2, "name": "Alfred Derrick", "coordinates": { "x": 213, "y": 187 } },
+        { "id": 3, "name": "Richard Brune", "coordinates": { "x": 108, "y": 15 } }
+    ],
+    "orders": [
+        {
+            "customerId": 1,
+            "productList": {
+                "tomatoes": 5,
+                "cucumber": 5,
+                "cheese": 1,
+                "milk": 2
+            }
+        },
+        {
+            "customerId": 1,
+            "productList": {
+                "eggs": 10,
+                "cucumber": 2,
+                "cheese": 1,
+                "ham": 2
+            }
+        },
+        {
+            "customerId": 2,
+            "productList": {
+                "eggs": 10,
+                "tomatoes": 2,
+                "bananas": 5,
+                "carrots": 15,
+                "bread": 2,
+                "onion": 6
+            }
+        },
+        {
+            "customerId": 2,
+            "productList" : {
+                "eggs" : 10,
+                "tomatoes" : 2,
+                "bananas" : 5,
+                "carrots" : 15,
+                "bread" : 2,
+                "onion" : 6
+            }
+        },
+        {
+            "customerId": 3,
+            "productList" : {
+                "eggs" : 5,
+                "cucumber" : 5,
+                "cheese" : 1,
+                "tomatoes" : 2
+            }
+        },
+        {
+            "customerId": 3,
+            "productList" : {
+                "eggs" : 10,
+                "tomatoes" : 2,
+                "ham" : 1,
+                "bananas" : 2
+            }
+        },
+        {
+            "customerId": 2,
+            "productList" : {
+                "bananas" : 10,
+                "carrots" : 2,
+                "onion" : 5,
+                "cucumber" : 15,
+                "cheese" : 2,
+                "bread" : 6
+            }
+        }
+    ],
+    "availableDrones": [
+        { "capacity": "500kW", "consumption": "1W" },
+        { "capacity": "1kW", "consumption": "3W" },
+        { "capacity": "2kW", "consumption": "5W" }
+    ]
+};
 
-let obj = JSON.parse(fs.readFileSync('data.json'));
+function calculateDistance(a, b) {
+    return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
+}
 
-let products = [];
-obj.products.forEach(product => {
-    products.push(new Product(product, Infinity));
-});
+function findNearestWarehouse(customerCoordinates, warehouses) {
+    return warehouses.reduce((nearest, warehouse) => {
+        const distance = calculateDistance(customerCoordinates, warehouse);
+        return distance < nearest.distance ? { warehouse, distance } : nearest;
+    }, { warehouse: null, distance: Infinity }).warehouse;
+}
 
-let warehouses = [];
-obj.warehouses.forEach(warehouse => {
-    const warehouseObj = new Warehouse(new Coordinates(warehouse.x, warehouse.y), warehouse.name);
-    warehouses.push(warehouseObj);
-});
+function convertCapacityToWatts(capacity) {
+    if (capacity.endsWith('kW')) {
+        return parseFloat(capacity) * 1000; // Convert kW to W
+    }
+    return parseFloat(capacity); // Assume input is in Watts if not kW
+}
 
-let customers = [];
-obj.customers.forEach(customer => {
-    const customerObj = 
-        new Customer(customer.id, customer.name, new Coordinates(customer.coordinates.x, customer.coordinates.y));
-    customers.push(customerObj);
-});
+function calculateEnergyConsumption(distance, consumptionRate) {
+    return distance * consumptionRate; // Consumption rate is in W per minute, distance in minutes
+}
 
-let orders = [];
-obj.orders.forEach(order => {
-    let productList = [];
-    for (const productName in order.productList) {
-        if (order.productList.hasOwnProperty(productName)) {
-            const productQuantity = order.productList[productName];
-            productList.push(new Product(productName, productQuantity));
+function processDronesAndDeliveriesWithBatteryManagementAndReturn(data) {
+    const { warehouses, customers, orders, availableDrones } = data;
+    const deliveryTimes = [];
+    let totalDeliveryTime = 0;
+    let drones = availableDrones.map(drone => ({
+        ...drone,
+        capacity: convertCapacityToWatts(drone.capacity),
+        consumption: parseFloat(drone.consumption),
+        location: null,
+        availableAt: 0,
+        batteryLevel: convertCapacityToWatts(drone.capacity) // Assume starting with a full charge
+    }));
+
+    function assignDroneToOrder(order, currentTime) {
+        const customer = customers.find(c => c.id === order.customerId);
+        const nearestWarehouse = findNearestWarehouse(customer.coordinates, warehouses);
+        for (let drone of drones) {
+            const distanceToCustomer = calculateDistance(nearestWarehouse, customer.coordinates);
+            const returnDistance = distanceToCustomer; // Assume return to the same warehouse for simplicity
+            const roundTripDistance = distanceToCustomer * 2;
+            const energyNeeded = calculateEnergyConsumption(roundTripDistance, drone.consumption);
+            const deliveryTime = roundTripDistance + 5; // Including 5 minutes for loading
+
+            if (currentTime >= drone.availableAt && drone.batteryLevel >= energyNeeded) {
+                drone.location = customer.coordinates;
+                drone.batteryLevel -= energyNeeded; // Reduce battery level by energy consumed
+
+                // Immediately calculate return to nearest warehouse after delivery
+                const nearestWarehouseForReturn = findNearestWarehouse(customer.coordinates, warehouses);
+                const returnToWarehouseDistance = calculateDistance(customer.coordinates, nearestWarehouseForReturn);
+                const returnTime = returnToWarehouseDistance; // Time to return to warehouse
+                const endTime = currentTime + deliveryTime + returnTime;
+
+                drone.availableAt = endTime; // Update availability considering the return trip
+                deliveryTimes.push({ customerId: customer.id, deliveryTime: endTime - currentTime });
+
+                totalDeliveryTime = Math.max(totalDeliveryTime, endTime);
+
+                // Check if the drone needs recharging, assuming it returns to a warehouse
+                if (drone.batteryLevel / drone.capacity < 0.2) {
+                    drone.availableAt += 20; // Add recharge time
+                    drone.batteryLevel = drone.capacity; // Drone is fully recharged
+                }
+                break;
+            }
         }
     }
-    const orderObj = new Order(order.customerId, productList);
-    orders.push(orderObj);
-});
-
-var mapSize = { x: 280, y: 280 };
-
-function calculateDistWithBound(start, end) {
-    const dx = Math.min(Math.abs(start.x - end.x), mapSize.x - Math.abs(start.x - end.x));
-    const dy = Math.min(Math.abs(start.y - end.y), mapSize.y - Math.abs(start.y - end.y));
-    
-    return Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2));
-}
-
-function findNearestWh(customer, warehouses) {
-    let minDistance = Infinity;
-    let nearestWh = undefined;
-   
-    warehouses.forEach(warehouse => {
-        const distance = calculateDistWithBound(customer.coordinates, warehouse.coordinates);
-        if (distance < minDistance) {
-            minDistance = distance;
-            nearestWh = warehouse;
-        }
+    orders.forEach(order => {
+        const currentTime = Math.min(...drones.map(drone => drone.availableAt));
+        assignDroneToOrder(order, currentTime);
     });
-    
-    return nearestWh;
+
+    console.log(`Total time needed for all deliveries: ${totalDeliveryTime} minutes`);
+    console.log(`Time needed for each delivery:`, deliveryTimes);
+    console.log(`Number of drones used: ${drones.length}`);
 }
 
-function calculateDeliveryTime(order, warehouses, customers) {
-    const customer = customers.find(customer => customer.id === order.customerId);
-    const nearestWh = findNearestWh(customer, warehouses);
-    const distToWh = calculateDistWithBound(customer.coordinates, nearestWh.coordinates);
-    
-    return distToWh;
-}
-
-function calculateConcurrentDeliveries(order, orders, warehouses, customers) {
-    let concurrentDeliveries = 0;
-    const deliveryTimeToCustomer = calculateDeliveryTime(order, warehouses, customers);
-    
-    orders.forEach(otherOrder => {
-        if (otherOrder.customerId !== order.customerId) {
-            const deliveryTimeToOtherCustomer = calculateDeliveryTime(otherOrder, warehouses, customers);
-            const totalDeliveryTime = Math.max(deliveryTimeToCustomer, deliveryTimeToOtherCustomer);
-            
-            if (totalDeliveryTime <= deliveryTimeToCustomer + deliveryTimeToOtherCustomer) concurrentDeliveries++;
-        }
-    });
-    
-    return concurrentDeliveries;
-}
-
-let maxDeliveryTime = 0;
-let maxConcurrentDeliveries = 0;
-
-orders.forEach(order => {
-    const deliveryTime = calculateDeliveryTime(order, warehouses, customers);
-    
-    if (deliveryTime > maxDeliveryTime) maxDeliveryTime = deliveryTime;
-    
-    const concurrentDeliveries = calculateConcurrentDeliveries(order, orders, warehouses, customers);
-    
-    if (concurrentDeliveries > maxConcurrentDeliveries) maxConcurrentDeliveries = concurrentDeliveries;
-});
-    
-console.log(`Total delivery time: ${maxDeliveryTime} minutes`);
-console.log(`Number of drones needed: ${maxConcurrentDeliveries}`);
+processDronesAndDeliveriesWithBatteryManagementAndReturn(data);

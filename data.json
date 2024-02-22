@@ -82,6 +82,62 @@
                 "bread": 2,
                 "onion": 6
             }
+        },
+        {
+            "customerId": 2,
+            "productList" : {
+                "eggs" : 10,
+                "tomatoes" : 2,
+                "bananas" : 5,
+                "carrots" : 15,
+                "bread" : 2,
+                "onion" : 6
+            }
+        },
+        {
+            "customerId": 3,
+            "productList" : {
+                "eggs" : 5,
+                "cucumber" : 5,
+                "cheese" : 1,
+                "tomatoes" : 2
+            }
+        },
+        {
+            "customerId": 3,
+            "productList" : {
+                "eggs" : 10,
+                "tomatoes" : 2,
+                "ham" : 1,
+                "bananas" : 2
+            }
+        },
+        {
+            "customerId": 2,
+            "productList" : {
+                "bananas" : 10,
+                "carrots" : 2,
+                "onion" : 5,
+                "cucumber" : 15,
+                "cheese" : 2,
+                "bread" : 6
+            }
+        }
+    ],
+    "typesOfDrones": [
+        {
+            "capacity" : "500kW",
+            "consumption" : "1W"
+        },
+        {
+            "capacity" : "1kW",
+            "consumption" : "3W"
+        },
+        {
+            "capacity" : "2kW",
+            "consumption" : "5W"
         }
     ]
 }
+
+
