@@ -11,6 +11,10 @@ class Order {
         if (value.filter(x => typeof(x) !== Product) !== undefined) throw new Error("Second argument array must have only Product type elements");
         this._productList = value;
     }
+
+    get productList() {
+        return this._productList;
+    }
 }
 
 module.exports = Order;

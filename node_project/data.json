@@ -1,4 +1,11 @@
 {
+    "output" : {
+        "poweredOn": true,
+        "minutes" : {
+            "program": 10,
+            "real": 400
+        }
+    },
     "map-top-right-coordinate": {
         "x": 280,
         "y": 280
@@ -131,7 +138,7 @@
         },
         {
             "capacity" : "1kW",
-            "consumption" : "3W"
+            "consumption" : "2W"
         },
         {
             "capacity" : "2kW",
@@ -139,5 +146,3 @@
         }
     ]
 }
-
-

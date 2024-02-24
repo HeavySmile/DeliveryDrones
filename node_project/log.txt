@@ -1,0 +1,24 @@
+Sat Feb 24 2024 - Delivery init, drone 500kW, 1W; order 1
+Sat Feb 24 2024 - Delivery init, drone 2kW, 5W; order 2
+Sat Feb 24 2024 - Delivery init, drone 1kW, 2W; order 1
+Sat Feb 24 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | 1816.1522368914975
+Sat Feb 24 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
+Sat Feb 24 2024 - Delivery init, drone 2kW, 5W; order 2
+Sat Feb 24 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | 1632.304473782995
+Sat Feb 24 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
+Sat Feb 24 2024 - Delivery init, drone 2kW, 5W; order 3
+Sat Feb 24 2024 - Drone 500kW, 1W has returned to warehouse in 127.27922061357856 minutes | 499745.4415587728
+Sat Feb 24 2024 - Delivery init, drone 500kW, 1W; order 3
+Sat Feb 24 2024 - Order 1 delivered in 132.27922061357856 minutes, drone 500kW, 1W
+Sat Feb 24 2024 - Drone 1kW, 2W has returned to warehouse in 127.27922061357856 minutes | 490.88311754568576
+Sat Feb 24 2024 - Delivery init, drone 1kW, 2W; order 2
+Sat Feb 24 2024 - Order 1 delivered in 132.27922061357856 minutes, drone 1kW, 2W
+Sat Feb 24 2024 - Drone 2kW, 5W has returned to warehouse in 85.37564055396598 minutes | 778.5480682433353
+Sat Feb 24 2024 - Order 3 delivered in 90.37564055396598 minutes, drone 2kW, 5W
+Sat Feb 24 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 1kW, 2W
+Sat Feb 24 2024 - Drone 1kW, 2W has returned to warehouse in 18.384776310850235 minutes | 417.3440123022848
+Sat Feb 24 2024 - Order 3 delivered in 90.37564055396598 minutes, drone 500kW, 1W
+Sat Feb 24 2024 - Drone 500kW, 1W has returned to warehouse in 85.37564055396598 minutes | 499574.69027766486
+Sat Feb 24 2024 - Total delivery time: 435.3097223350891 minutes
+Sat Feb 24 2024 - Total drones used: 3
+Sat Feb 24 2024 - Average delivery time: 142.27544321932564 minutes
