@@ -12,22 +12,13 @@ app.use(express.json());
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-let data;
 let processingDone = false;
-
-let currentWs;
-
-async function processOrders() {
-  main();
-  processingDone = true;
-  resolve();
-}
 
 wss.on("connection", (ws) => {
   console.log("Client connected!");
-  currentWs = ws;
 
-  ws.on("message", (message) => {
+  ws.on("message", async (message) => {
+    let data;
     try {
       data = new Config(message);
     }
@@ -35,14 +26,20 @@ wss.on("connection", (ws) => {
       const log = fs.readFileSync('log.txt', 'utf-8');
       console.log(log);
       console.log(error);
-      //sendToClients(log);
-      //return log;
     }
-
-    //const cf = new Config(fs.readFileSync('data.json', 'utf-8'))
-
+    
     const calc = new CalculateDeliveries(data, ws);
-    calc.processOrders();
+    
+    let statusInterval;
+    if (data.deliveryStatus.output)
+    {
+      statusInterval = setInterval(() => {
+        calc.sendStatusesToClient();
+      }, data.deliveryStatus.frequency / data.output.minutes.program * data.output.minutes.real * 100);
+    }
+    
+    await calc.processOrders(statusInterval);
+    clearInterval(statusInterval);
   });
 
   ws.on('close', function () {

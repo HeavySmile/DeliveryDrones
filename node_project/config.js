@@ -1,9 +1,9 @@
-import { Order } from './Models/Order.js';
-import { Coordinates } from './Models/Coordinates.js';
-import { Customer } from './Models/Customer.js';
-import { Warehouse } from './Models/Warehouse.js';
-import { Product } from './Models/Product.js';
-import { Drone } from './Models/Drone.js';
+import { Order } from './models/order.js';
+import { Coordinates } from './models/coordinates.js';
+import { Customer } from './models/customer.js';
+import { Warehouse } from './models/warehouse.js';
+import { Product } from './models/product.js';
+import { Drone } from './models/drone.js';
 import { convertToWatts } from './utils/utils.js';
 
 export class Config {
@@ -11,6 +11,9 @@ export class Config {
         this.json = JSON.parse(json);
         this.output = this.json.output ?? { poweredOn: true, minutes: { program: 1, real: 1 } };
         this.deliveryStatus = json.deliveryStatus ?? { output: true , frequency: 1 };
+        this.products = Object.entries(this.json.products).map(([productName, quantity]) => {
+            return new Product(productName, quantity);
+        });
         this.orders = this.json.orders.map((order) => {
             return new Order(order.customerId, Object.entries(order.productList).map(([productName, quantity]) => {
                 return new Product(productName, quantity);

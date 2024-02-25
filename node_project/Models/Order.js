@@ -1,5 +1,4 @@
-import { Product } from './Product.js';
-//const Product = require('./Product.js');
+import { Product } from './product.js';
 
 export class Order {
     constructor(customerId, productList) {
@@ -17,5 +16,3 @@ export class Order {
         return this._productList;
     }
 }
-
-//module.exports = Order;

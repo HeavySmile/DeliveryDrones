@@ -1,6 +1,4 @@
-import { Coordinates } from './Coordinates.js';
-
-//var Coordinates = require('./Coordinates.js')
+import { Coordinates } from './coordinates.js';
 
 export class Warehouse {
     constructor(coordinates, name) {
@@ -17,5 +15,3 @@ export class Warehouse {
         return this._coordinates;
     }
 }
-
-//emodule.exports = Warehouse;

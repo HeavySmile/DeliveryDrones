@@ -1,11 +1,10 @@
-import { calculateEnergyConsumption } from '../utils/utils.js';
+import { calculateEnergyConsumption, logToFile } from '../utils/utils.js';
 
 export class Drone {
     constructor(capacity, consumption, timeProgram, timeReal)
     {
         this._capacity = capacity;
         this._consumption = consumption;
-        this.available = true;
         this.battery = capacity;
         this.timeProgram = timeProgram;
         this.timeReal = timeReal;
@@ -50,13 +49,9 @@ export class Drone {
             
             setTimeout(() => {
                 this.battery = this._capacity;
-                resolve({
-                    time: rechargeTime,
-                    message: `Drone ${this._capacity / 1000 + "kW, " + this._consumption + "W"} recharged in ${rechargeTime} minutes`
-                })
+                logToFile(`Drone ${this._capacity / 1000 + "kW, " + this._consumption + "W"} recharged in ${rechargeTime} minutes`);
+                resolve(rechargeTime)
             }, rechargeTime / this.timeProgram * this.timeReal);
         });
     }
 }
-
-//module.exports = Drone;

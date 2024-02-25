@@ -1,6 +1,6 @@
 import fs from 'fs/promises';
 
-const logFilePath = 'log.txt';
+const logFilePath = './logs/log.txt';
 
 export function clearLogFile() {
     fs.writeFile(logFilePath, '');

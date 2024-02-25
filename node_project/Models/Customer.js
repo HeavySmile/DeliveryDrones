@@ -1,4 +1,4 @@
-import { Coordinates } from './Coordinates.js';
+import { Coordinates } from './coordinates.js';
 
 export class Customer {
     constructor(id, name, coordinates) {

@@ -26,5 +26,3 @@ export class Product {
         return this._name;
     }
 }
-
-//module.exports = Product;
