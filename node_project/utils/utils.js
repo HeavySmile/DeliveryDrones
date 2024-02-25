@@ -22,6 +22,7 @@ export function convertToWatts(capacity) {
     return parseFloat(capacity);
 }
 
-export function calculateEnergyConsumption(distance, consumptionRate) {
-    return distance * consumptionRate;
+export function calculateEnergyConsumption(distance, consumptionRate, weight) {
+    const weightInKg = Math.round(weight / 1000);
+    return distance * consumptionRate * (weightInKg <= 1 ? 1 : weightInKg);
 }

@@ -1,9 +1,10 @@
-import { logToFile, clearLogFile, calculateDistance } from './utils/utils.js';
+import { logToFile, clearLogFile, calculateDistance, calculateEnergyConsumption } from './utils/utils.js';
 
 export class CalculateDeliveries {
     constructor(config, ws) {
         this.config = config;
         this.ws = ws;
+        this.products = config.products;
         this.drones = config.drones;
         this.orders = config.orders;
         this.customers = config.customers;
@@ -58,14 +59,15 @@ export class CalculateDeliveries {
     async handleDelivery(drone, order, location) {
         const distances = this.warehouses.map((warehouse) => { return calculateDistance(warehouse.coordinates, location) });
         const deliveryDistance = Math.min(...distances);
-        const rechargeTime = 0;
+        let rechargeTime = 0;
+        const weight = order.productList.reduce((acc, product) => acc + product.quantity, 0);
 
-        if (!drone.hasEnoughBattery(deliveryDistance * 2)) rechargeTime = await drone.recharge();
+        if (!drone.hasEnoughBattery(deliveryDistance * 2, weight)) rechargeTime = await drone.recharge();
 
         const deliveryTime = await this.deliverToCustomer(drone, order, location);
         const returnTime = await this.returnToWarehouse(drone, location)
 
-        drone.consumeBattery(deliveryTime + returnTime - this.loadingTime);
+        drone.consumeBattery(deliveryTime + returnTime - this.loadingTime, weight);
 
         this.orderStatuses.set(order, "Delivered");
 
@@ -76,7 +78,8 @@ export class CalculateDeliveries {
         let customerLocation = this.customers.find(c => c.id === order.customerId).coordinates;
         let distances = this.warehouses.map((warehouse) => { return calculateDistance(warehouse.coordinates, customerLocation) });
         let deliveryDistance = Math.min(...distances);
-        return drone.capacity > drone.consumption * deliveryDistance * 2;
+        let weight = Math.round(order.productList.reduce((acc, product) => acc + product.quantity, 0) / 1000);
+        return drone.capacity > calculateEnergyConsumption(deliveryDistance * 2, drone.consumption, weight);
     }
 
     async deliverOrder(drone) {
@@ -85,7 +88,6 @@ export class CalculateDeliveries {
         const order = this.orders.find(order => this.isDroneEligibleForOrder(drone, order));
 
         if (order === undefined) return;
-
         else this.orders.splice(this.orders.indexOf(order), 1);
 
         let customerLocation = this.customers.find(c => c.id === order.customerId).coordinates;
@@ -118,11 +120,8 @@ export class CalculateDeliveries {
                     "---------------------------------------------------------");
     }
 
-    async processOrders(statusInterval) {
+    async processOrders() {
         clearLogFile();
-
         await this.deliverAllOrders();
-
-        clearInterval(statusInterval);
     }
 }

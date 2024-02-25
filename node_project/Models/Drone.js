@@ -32,13 +32,13 @@ export class Drone {
         return this._consumption;
     }
 
-    consumeBattery(distance) {
-        const energyConsumed = calculateEnergyConsumption(distance, this._consumption);
+    consumeBattery(distance, weight) {
+        const energyConsumed = calculateEnergyConsumption(distance, this._consumption, weight);
         this.battery - energyConsumed < 0 ? this.battery = 0 : this.battery -= energyConsumed;
     }
 
-    hasEnoughBattery(distance) {
-        const energyNeeded = calculateEnergyConsumption(distance, this._consumption);
+    hasEnoughBattery(distance, weight) {
+        const energyNeeded = calculateEnergyConsumption(distance, this._consumption, weight);
         return this.battery >= energyNeeded;
     }
 

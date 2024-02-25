@@ -38,7 +38,7 @@ wss.on("connection", (ws) => {
       }, data.deliveryStatus.frequency / data.output.minutes.program * data.output.minutes.real * 100);
     }
     
-    await calc.processOrders(statusInterval);
+    await calc.processOrders();
     clearInterval(statusInterval);
   });
 
