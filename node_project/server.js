@@ -12,8 +12,6 @@ app.use(express.json());
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-let processingDone = false;
-
 wss.on("connection", (ws) => {
   console.log("Client connected!");
 
@@ -23,13 +21,16 @@ wss.on("connection", (ws) => {
       data = new Config(message);
     }
     catch (error) {
+      // If data is corrupted or missing, send logs from the last calculation
       const log = fs.readFileSync('log.txt', 'utf-8');
+      ws.send(log);
       console.log(log);
       console.log(error);
     }
     
     const calc = new CalculateDeliveries(data, ws);
     
+    // Statuses are sent periodically to the client
     let statusInterval;
     if (data.deliveryStatus.output)
     {

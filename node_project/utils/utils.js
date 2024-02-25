@@ -22,6 +22,7 @@ export function convertToWatts(capacity) {
     return parseFloat(capacity);
 }
 
+// I assume that if the weight is less than 1kg, the energy consumption is not affected by the weight
 export function calculateEnergyConsumption(distance, consumptionRate, weight) {
     const weightInKg = Math.round(weight / 1000);
     return distance * consumptionRate * (weightInKg <= 1 ? 1 : weightInKg);

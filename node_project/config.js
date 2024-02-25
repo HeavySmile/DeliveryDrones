@@ -6,6 +6,7 @@ import { Product } from './models/product.js';
 import { Drone } from './models/drone.js';
 import { convertToWatts } from './utils/utils.js';
 
+// Class to store the JSON content
 export class Config {
     constructor(json) {
         this.json = JSON.parse(json);

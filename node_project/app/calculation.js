@@ -66,7 +66,9 @@ export class CalculateDeliveries {
 
         const deliveryTime = await this.deliverToCustomer(drone, order, location);
         const returnTime = await this.returnToWarehouse(drone, location)
-
+        
+        // From the information in the assignment, the battery is not consumed when the drone is not moving
+        // I assume that the drone is not moving during the loading time
         drone.consumeBattery(deliveryTime + returnTime - this.loadingTime, weight);
 
         this.orderStatuses.set(order, "Delivered");
@@ -96,7 +98,8 @@ export class CalculateDeliveries {
 
         this.deliveryTimesByDrone[this.drones.indexOf(drone)] += totalOrderTime;
         this.deliveryTimes.push(totalOrderTime);
-        // why not?
+        
+        // Using recursion is not really good practice, but I just couldn't stop myself from doing it
         await this.deliverOrder(drone);
     };
 
@@ -121,6 +124,7 @@ export class CalculateDeliveries {
     }
 
     async processOrders() {
+        // Done to store only the last configuration logs
         clearLogFile();
         await this.deliverAllOrders();
     }
