@@ -1,3 +1,13 @@
+// import fs from 'fs';
+// import { Config } from './config.js';
+// import { CalculateDeliveries } from './calculation.js';
+
+// const cf = new Config(fs.readFileSync('data.json', 'utf-8'))
+
+// const calc = new CalculateDeliveries(cf, ws);
+
+// console.log(cf);
+
 import WebSocket from 'ws';
 import fetch from 'node-fetch';
 import fs from 'fs';

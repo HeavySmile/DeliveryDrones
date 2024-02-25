@@ -1,27 +1,27 @@
 Sun Feb 25 2024 - Delivery init, drone 500kW, 1W; order 1
-Sun Feb 25 2024 - Delivery init, drone 2kW, 5W; order 2
 Sun Feb 25 2024 - Delivery init, drone 1kW, 2W; order 1
+Sun Feb 25 2024 - Delivery init, drone 2kW, 5W; order 2
 Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
 Sun Feb 25 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | battery: 1816.1522368914975
 Sun Feb 25 2024 - Delivery init, drone 2kW, 5W; order 2
 Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
-Sun Feb 25 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | battery: 1632.304473782995
 Sun Feb 25 2024 - Delivery init, drone 2kW, 5W; order 3
+Sun Feb 25 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | battery: 1632.304473782995
 Sun Feb 25 2024 - Order 1 delivered in 132.27922061357856 minutes, drone 500kW, 1W
 Sun Feb 25 2024 - Drone 500kW, 1W has returned to warehouse in 127.27922061357856 minutes | battery: 499745.4415587728
 Sun Feb 25 2024 - Delivery init, drone 500kW, 1W; order 3
+Sun Feb 25 2024 - Delivery init, drone 1kW, 2W; order 2
 Sun Feb 25 2024 - Order 1 delivered in 132.27922061357856 minutes, drone 1kW, 2W
 Sun Feb 25 2024 - Drone 1kW, 2W has returned to warehouse in 127.27922061357856 minutes | battery: 490.88311754568576
-Sun Feb 25 2024 - Delivery init, drone 1kW, 2W; order 2
 Sun Feb 25 2024 - Order 3 delivered in 90.37564055396598 minutes, drone 2kW, 5W
 Sun Feb 25 2024 - Drone 2kW, 5W has returned to warehouse in 85.37564055396598 minutes | battery: 778.5480682433353
 Sun Feb 25 2024 - Delivery init, drone 2kW, 5W; order 2
-Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 1kW, 2W
 Sun Feb 25 2024 - Drone 1kW, 2W has returned to warehouse in 18.384776310850235 minutes | battery: 417.3440123022848
-Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
+Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 1kW, 2W
 Sun Feb 25 2024 - Drone 2kW, 5W has returned to warehouse in 18.384776310850235 minutes | battery: 594.7003051348329
+Sun Feb 25 2024 - Order 2 delivered in 23.384776310850235 minutes, drone 2kW, 5W
 Sun Feb 25 2024 - Drone 500kW, 1W has returned to warehouse in 85.37564055396598 minutes | battery: 499574.69027766486
-Sun Feb 25 2024 - Order 3 delivered in 90.37564055396598 minutes, drone 500kW, 1W
 Sun Feb 25 2024 - Total delivery time: 435.3097223350891 minutes
-Sun Feb 25 2024 - Total drones used: 3
 Sun Feb 25 2024 - Average delivery time: 129.7122068946225 minutes
+Sun Feb 25 2024 - Order 3 delivered in 90.37564055396598 minutes, drone 500kW, 1W
+Sun Feb 25 2024 - Total drones used: 3

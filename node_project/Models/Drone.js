@@ -1,26 +1,14 @@
 import { calculateEnergyConsumption } from '../utils/utils.js';
-import { config } from '../config.js';
-
-// const { calculateEnergyConsumption } = require('../utils.js');
-// const { config } = require('../config.js');
 
 export class Drone {
-    constructor(capacity, consumption, battery = capacity, available = true)
+    constructor(capacity, consumption, timeProgram, timeReal)
     {
         this._capacity = capacity;
         this._consumption = consumption;
-        this._available = available;
-        this._battery = battery;
-    }
-
-    set battery(value)
-    {
-        this._battery = value;
-    }
-
-    get battery()
-    {
-        return this._battery;
+        this.available = true;
+        this.battery = capacity;
+        this.timeProgram = timeProgram;
+        this.timeReal = timeReal;
     }
 
     set capacity(value)
@@ -45,39 +33,28 @@ export class Drone {
         return this._consumption;
     }
 
-    get available()
-    {
-        return this._available;
-    }
-
-    set available(value)
-    {
-        if (typeof(value) !== 'boolean') throw new Error("Available must be a boolean");
-        this._available = value;
-    }
-
     consumeBattery(distance) {
         const energyConsumed = calculateEnergyConsumption(distance, this._consumption);
-        this._battery - energyConsumed < 0 ? this._battery = 0 : this._battery -= energyConsumed;
+        this.battery - energyConsumed < 0 ? this.battery = 0 : this.battery -= energyConsumed;
     }
 
     hasEnoughBattery(distance) {
         const energyNeeded = calculateEnergyConsumption(distance, this._consumption);
-        return this._battery >= energyNeeded;
+        return this.battery >= energyNeeded;
     }
 
     recharge() {
         return new Promise((resolve) => {
-            const missingBattery = this._capacity - this._battery;
+            const missingBattery = this._capacity - this.battery;
             const rechargeTime = (missingBattery / this._capacity) * 20; 
             
             setTimeout(() => {
-                this._battery = this._capacity;
+                this.battery = this._capacity;
                 resolve({
                     time: rechargeTime,
                     message: `Drone ${this._capacity / 1000 + "kW, " + this._consumption + "W"} recharged in ${rechargeTime} minutes`
                 })
-            }, rechargeTime / config.minutes.program * config.minutes.real);
+            }, rechargeTime / this.timeProgram * this.timeReal);
         });
     }
 }

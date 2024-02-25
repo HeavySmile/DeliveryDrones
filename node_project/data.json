@@ -6,8 +6,8 @@
     "output": {
         "poweredOn": true,
         "minutes" : {
-            "program": 10,
-            "real": 400
+            "program": 1,
+            "real": 1
         }
     },
     "map-top-right-coordinate": {
