@@ -1,4 +1,4 @@
-import { logToFile, clearLogFile, calculateDistance, calculateEnergyConsumption } from './utils/utils.js';
+import { logToFile, clearLogFile, calculateDistance, calculateEnergyConsumption } from '../utils/utils.js';
 
 export class CalculateDeliveries {
     constructor(config, ws) {

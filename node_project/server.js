@@ -2,7 +2,7 @@ import http from "http";
 import express from "express";
 import fs from 'fs';
 import { WebSocketServer } from "ws";
-import { CalculateDeliveries } from './calculation.js';
+import { CalculateDeliveries } from './app/calculation.js';
 import { Config } from './config.js';
 
 const port = 8080;
