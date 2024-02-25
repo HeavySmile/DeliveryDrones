@@ -1,4 +1,4 @@
-let config = {
+export let config = {
     poweredOn: true,
     minutes: {
         program: 1,
@@ -6,4 +6,4 @@ let config = {
     }
 };
 
-module.exports = { config };
+//module.exports = { config };

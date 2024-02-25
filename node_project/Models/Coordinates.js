@@ -1,4 +1,4 @@
-class Coordinates {
+export class Coordinates {
     constructor(x, y) {
         this._x = x;
         this._y = y;
@@ -22,5 +22,3 @@ class Coordinates {
         return this._y;
     }
 }
-
-module.exports = Coordinates;

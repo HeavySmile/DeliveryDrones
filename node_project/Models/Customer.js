@@ -1,6 +1,6 @@
-const Coordinates = require('./Coordinates.js');
+import { Coordinates } from './Coordinates.js';
 
-class Customer {
+export class Customer {
     constructor(id, name, coordinates) {
         this.id = id;
         this.name = name;
@@ -15,5 +15,3 @@ class Customer {
         return this._coordinates;
     }
 }
-
-module.exports = Customer;

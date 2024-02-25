@@ -1,4 +1,4 @@
-class Product {
+export class Product {
     constructor(name, quantity = Infinity) {
         this._name = name;
         this._quantity = quantity;
@@ -27,4 +27,4 @@ class Product {
     }
 }
 
-module.exports = Product;
+//module.exports = Product;

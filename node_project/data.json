@@ -1,9 +1,13 @@
 {
-    "output" : {
+    "deliveryStatus": {
+        "output": true,
+        "frequency": 30
+    },
+    "output": {
         "poweredOn": true,
         "minutes" : {
             "program": 10,
-            "real": 400
+            "real": 200
         }
     },
     "map-top-right-coordinate": {
@@ -126,6 +130,16 @@
                 "carrots" : 2,
                 "onion" : 5,
                 "cucumber" : 15,
+                "cheese" : 2,
+                "bread" : 6
+            }
+        },
+        {
+            "customerId": 2,
+            "productList" : {
+                "carrots" : 2,
+                "onion" : 5,
+                "cucumber" : 10,
                 "cheese" : 2,
                 "bread" : 6
             }

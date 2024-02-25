@@ -1,7 +1,10 @@
-const { calculateEnergyConsumption } = require('../utils.js');
-const { config } = require('../config.js');
+import { calculateEnergyConsumption } from '../utils/utils.js';
+import { config } from '../config.js';
 
-class Drone {
+// const { calculateEnergyConsumption } = require('../utils.js');
+// const { config } = require('../config.js');
+
+export class Drone {
     constructor(capacity, consumption, battery = capacity, available = true)
     {
         this._capacity = capacity;
@@ -79,4 +82,4 @@ class Drone {
     }
 }
 
-module.exports = Drone;
+//module.exports = Drone;

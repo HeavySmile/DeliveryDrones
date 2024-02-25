@@ -1,9 +1,46 @@
-const WebSocket = require('ws');
+import WebSocket from 'ws';
+import fetch from 'node-fetch';
+import fs from 'fs';
+import { v4 as uuid } from 'uuid';
+import FileReader from 'filereader';
 
-var ws = new WebSocket('ws://localhost:8080');
-ws.onmessage = function (event) {
-  console.log('Message from server:', event.data);
-};
-ws.onopen = function (event) {
-  ws.send('Hello, server!');
-};
+const ws = new WebSocket('ws://localhost:8080');
+
+ws.on('open', function open() {
+  console.log('Connected to the server');
+  fs.readFile('data.json', 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+
+    // Parse the JSON data from the file
+    const jsonData = JSON.parse(data);
+
+    // Send the JSON data to the server
+    ws.send(JSON.stringify(jsonData));
+  });
+});
+
+ws.on('message', function message(data) {
+  console.log(data.toString());
+});
+
+ws.on('close', function close() {
+  console.log('Disconnected from the server');
+});
+
+ws.on('error', function error(err) {
+  console.error(`WebSocket error: ${err}`);
+});
+
+// fetch('http://localhost:8080/upload-json', {
+//   method: 'POST', // Specify the method
+//   headers: {
+//     'Content-Type': 'application/json', // Specify the content type
+//   },
+//   body:  // Specify the data in the body
+// })
+// .then(response => response.text())
+// .then(data => console.log(data))
+// .catch((error) => console.error('Error:', error));

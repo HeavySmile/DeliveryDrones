@@ -1,35 +1,27 @@
-const fs = require('fs').promises; // Notice the .promises here
+import fs from 'fs/promises';
 
 const logFilePath = 'log.txt';
 
-function clearLogFile() {
+export function clearLogFile() {
     fs.writeFile(logFilePath, '');
 }
 
-function logToFile(message) {
+export function logToFile(message) {
     const timestamp = new Date().toDateString();
     const logMessage = `${timestamp} - ${message}\n`;
     
     fs.appendFile(logFilePath, logMessage)
 }
 
-function calculateDistance(a, b) {
+export function calculateDistance(a, b) {
     return Math.sqrt(Math.pow(a.x - b.x, 2) + Math.pow(a.y - b.y, 2));
 }
 
-function convertToWatts(capacity) {
+export function convertToWatts(capacity) {
     if (capacity.endsWith('kW')) return parseFloat(capacity) * 1000;
     return parseFloat(capacity);
 }
 
-function calculateEnergyConsumption(distance, consumptionRate) {
+export function calculateEnergyConsumption(distance, consumptionRate) {
     return distance * consumptionRate;
 }
-
-module.exports = {
-    calculateDistance,
-    convertToWatts,
-    calculateEnergyConsumption,
-    logToFile,
-    clearLogFile
-};

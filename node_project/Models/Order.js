@@ -1,6 +1,7 @@
-const Product = require('./Product.js');
+import { Product } from './Product.js';
+//const Product = require('./Product.js');
 
-class Order {
+export class Order {
     constructor(customerId, productList) {
         this.customerId = customerId;
         this._productList = productList;
@@ -17,4 +18,4 @@ class Order {
     }
 }
 
-module.exports = Order;
+//module.exports = Order;
