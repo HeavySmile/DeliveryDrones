@@ -33,14 +33,3 @@ ws.on('close', function close() {
 ws.on('error', function error(err) {
   console.error(`WebSocket error: ${err}`);
 });
-
-// fetch('http://localhost:8080/upload-json', {
-//   method: 'POST', // Specify the method
-//   headers: {
-//     'Content-Type': 'application/json', // Specify the content type
-//   },
-//   body:  // Specify the data in the body
-// })
-// .then(response => response.text())
-// .then(data => console.log(data))
-// .catch((error) => console.error('Error:', error));

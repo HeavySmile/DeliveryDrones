@@ -1,13 +1,13 @@
 {
     "deliveryStatus": {
         "output": true,
-        "frequency": 30
+        "frequency": 100
     },
     "output": {
         "poweredOn": true,
         "minutes" : {
             "program": 10,
-            "real": 200
+            "real": 400
         }
     },
     "map-top-right-coordinate": {
